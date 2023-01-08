@@ -14,6 +14,7 @@ pub enum JsonCodecError {
     SerdeJson(#[from] serde_json::Error),
 }
 
+#[derive(Debug, Default)]
 pub struct JsonCodec<Dec, Enc> {
     // TODO: Allow any inner codec ?
     lines_codec: LinesCodec,

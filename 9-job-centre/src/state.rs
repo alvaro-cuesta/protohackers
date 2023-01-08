@@ -80,12 +80,12 @@ impl State {
             .or_default()
             .insert(job_id, (job_priority, max_queue_name.to_owned()));
 
-        return Some(FullJob::new(
+        Some(FullJob::new(
             job_id,
             job_value.clone(),
             job_priority,
             max_queue_name.to_owned(),
-        ));
+        ))
     }
 
     pub fn wait_job(&mut self, client: SocketAddr, queue_names: Vec<QueueName>) -> WaitResponse {
