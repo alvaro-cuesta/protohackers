@@ -18,7 +18,8 @@ use tokio::{
     sync::Mutex,
     task::JoinHandle,
 };
-use tokio_util::codec::{Framed, LinesCodec};
+use tokio_util::codec::Framed;
+use utils::{JsonCodec, JsonCodecError};
 
 // TODO: tokio_serde_json?
 
@@ -34,15 +35,13 @@ async fn process_socket(
     // socket.set_linger(dur)?;
     // socket.set_ttl(ttl)?;
 
-    let mut codec = Framed::new(socket, LinesCodec::new());
+    let mut framed = Framed::new(socket, JsonCodec::<Request, Response>::new());
 
-    while let Some(Ok(line)) = codec.next().await {
-        let request = serde_json::from_str::<Request>(&line);
-
+    while let Some(item) = framed.next().await {
         #[cfg(debug_assertions)]
-        println!("{addr} --> {request:?}");
+        println!("{addr} --> {item:?}");
 
-        let response = match request {
+        let response = match item {
             Ok(Request::Put { queue, job, pri }) => {
                 let id = {
                     let mut state = state.lock().await;
@@ -109,15 +108,16 @@ async fn process_socket(
 
                 Response::ok_debug()
             }
-            Err(_) => Response::error("Invalid request".to_string()),
+            Err(JsonCodecError::SerdeJson(_)) => Response::error("Invalid request".to_string()),
+            Err(err @ JsonCodecError::Io(_) | err @ JsonCodecError::LinesCodec(_)) => {
+                return Err(err.into())
+            }
         };
 
         #[cfg(debug_assertions)]
         println!("{addr} <-- {response:?}");
 
-        let response = serde_json::to_string(&response)?;
-
-        codec.send(&response).await?;
+        framed.send(&response).await?;
     }
 
     println!("Client {addr} disconnected");

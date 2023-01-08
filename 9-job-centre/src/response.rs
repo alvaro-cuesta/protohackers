@@ -42,8 +42,15 @@ impl Response {
         Self::Error { error: Some(error) }
     }
 
+    #[allow(dead_code)]
     pub fn error_anon() -> Self {
         Self::Error { error: None }
+    }
+}
+
+impl AsRef<Response> for Response {
+    fn as_ref(&self) -> &Response {
+        self
     }
 }
 
