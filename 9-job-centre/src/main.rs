@@ -13,29 +13,17 @@ use crate::{
 };
 use futures::{SinkExt, StreamExt};
 use std::{net::SocketAddr, sync::Arc};
-use tokio::{
-    net::{TcpListener, TcpStream},
-    sync::Mutex,
-    task::JoinHandle,
-};
-use tokio_util::codec::Framed;
-use utils::{JsonCodec, JsonCodecError};
+use tokio::{net::TcpStream, sync::Mutex};
+use utils::{default_listen, framed_json, JsonCodecError};
 
 // TODO: tokio_serde_json?
 
-async fn process_socket(
+async fn handle_client(
     socket: TcpStream,
     addr: SocketAddr,
     state: Arc<Mutex<State>>,
 ) -> anyhow::Result<()> {
-    println!("Got a connection from {addr}");
-
-    socket.set_nodelay(true)?;
-    // TODO:
-    // socket.set_linger(dur)?;
-    // socket.set_ttl(ttl)?;
-
-    let mut framed = Framed::new(socket, JsonCodec::<Request, Response>::new());
+    let mut framed = framed_json(socket);
 
     while let Some(item) = framed.next().await {
         #[cfg(debug_assertions)]
@@ -132,24 +120,14 @@ async fn process_socket(
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    let listener = TcpListener::bind("0.0.0.0:1337").await?;
-    let local_addr = listener.local_addr()?;
-
-    println!("Listening on {local_addr}");
-
     // TODO: RwLock?
     let state = Arc::new(Mutex::new(State::default()));
 
-    loop {
-        let (socket, addr) = listener.accept().await?;
-
+    default_listen(|socket, addr| {
         let state = Arc::clone(&state);
+        handle_client(socket, addr, state)
+    })
+    .await?;
 
-        // TODO: TcpListenerStream?
-        let _: JoinHandle<anyhow::Result<()>> = tokio::spawn(async move {
-            process_socket(socket, addr, state).await?;
-
-            Ok(())
-        });
-    }
+    Ok(())
 }
