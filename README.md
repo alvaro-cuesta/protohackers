@@ -2,7 +2,7 @@
 
 My solutions for [Protohackers](https://protohackers.com) server programming challenges.
 
-- [ ] [0 - Smoke Test](./0-smoke-test/)
+- [x] [0 - Smoke Test](./0-smoke-test/) (🦀 Rust)
 - [ ] [1 - Prime Time](./1-prime-time/)
 - [ ] [2 - Means to an End](./2-means-to-an-end/)
 - [ ] [3 - Budget Chat](./3-budget-chat/)
