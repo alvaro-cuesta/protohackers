@@ -1,9 +1,9 @@
+use protohackers_utils::default_listen;
 use std::net::SocketAddr;
 use tokio::{
     io::{AsyncReadExt, AsyncWriteExt},
     net::TcpStream,
 };
-use utils::default_listen;
 
 async fn handle_client(mut socket: TcpStream, _: SocketAddr) -> anyhow::Result<()> {
     let mut buf = vec![0; 1024];

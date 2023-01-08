@@ -1,0 +1,7 @@
+[workspace]
+members = [
+    "0-smoke-test",
+    "1-prime-time",
+    "9-job-centre",
+    "protohackers-utils",
+]

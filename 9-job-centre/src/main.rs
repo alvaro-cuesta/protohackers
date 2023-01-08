@@ -12,9 +12,9 @@ use crate::{
     state::{State, WaitResponse},
 };
 use futures::{SinkExt, StreamExt};
+use protohackers_utils::{default_listen, framed_json, JsonCodecError};
 use std::{net::SocketAddr, sync::Arc};
 use tokio::{net::TcpStream, sync::Mutex};
-use utils::{default_listen, framed_json, JsonCodecError};
 
 // TODO: tokio_serde_json?
 

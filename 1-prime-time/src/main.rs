@@ -2,11 +2,11 @@ mod request;
 mod response;
 
 use futures::{SinkExt, StreamExt};
+use protohackers_utils::{default_listen, framed_json};
 use request::Request;
 use response::Response;
 use std::net::SocketAddr;
 use tokio::net::TcpStream;
-use utils::{default_listen, framed_json};
 
 async fn handle_client(socket: TcpStream, addr: SocketAddr) -> anyhow::Result<()> {
     let mut framed = framed_json::<_, Request, Response>(socket);
