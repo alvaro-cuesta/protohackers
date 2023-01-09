@@ -8,8 +8,8 @@ use response::Response;
 use std::net::SocketAddr;
 use tokio::net::TcpStream;
 
-async fn handle_client(socket: TcpStream, addr: SocketAddr) -> anyhow::Result<()> {
-    let mut framed = framed_json::<_, Request, Response>(socket);
+async fn handle_client(stream: TcpStream, addr: SocketAddr) -> anyhow::Result<()> {
+    let mut framed = framed_json::<_, Request, Response>(stream);
 
     while let Some(item) = framed.next().await {
         #[cfg(debug_assertions)]

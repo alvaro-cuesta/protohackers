@@ -19,11 +19,11 @@ use tokio::{net::TcpStream, sync::Mutex};
 // TODO: tokio_serde_json?
 
 async fn handle_client(
-    socket: TcpStream,
+    stream: TcpStream,
     addr: SocketAddr,
     state: Arc<Mutex<State>>,
 ) -> anyhow::Result<()> {
-    let mut framed = framed_json(socket);
+    let mut framed = framed_json(stream);
 
     while let Some(item) = framed.next().await {
         #[cfg(debug_assertions)]
@@ -123,9 +123,9 @@ async fn main() -> anyhow::Result<()> {
     // TODO: RwLock?
     let state = Arc::new(Mutex::new(State::default()));
 
-    default_listen(|socket, addr| {
+    default_listen(|stream, addr| {
         let state = Arc::clone(&state);
-        handle_client(socket, addr, state)
+        handle_client(stream, addr, state)
     })
     .await?;
 

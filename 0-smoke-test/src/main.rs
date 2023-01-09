@@ -5,17 +5,17 @@ use tokio::{
     net::TcpStream,
 };
 
-async fn handle_client(mut socket: TcpStream, _: SocketAddr) -> anyhow::Result<()> {
+async fn handle_client(mut stream: TcpStream, _: SocketAddr) -> anyhow::Result<()> {
     let mut buf = vec![0; 1024];
 
     loop {
-        let bytes = socket.read(&mut buf).await?;
+        let bytes = stream.read(&mut buf).await?;
 
         if bytes == 0 {
             break;
         }
 
-        socket.write_all(&buf[0..bytes]).await?;
+        stream.write_all(&buf[0..bytes]).await?;
     }
 
     Ok(())
