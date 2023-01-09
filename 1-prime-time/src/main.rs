@@ -24,7 +24,7 @@ async fn handle_client(stream: TcpStream, addr: SocketAddr) -> anyhow::Result<()
 
                 framed.send(response).await?;
             }
-            Err(_) => {
+            Err(err) => {
                 let response = Response::error();
 
                 #[cfg(debug_assertions)]
@@ -32,7 +32,7 @@ async fn handle_client(stream: TcpStream, addr: SocketAddr) -> anyhow::Result<()
 
                 framed.send(response).await?;
 
-                return Err(anyhow::Error::msg("Malformed response"));
+                return Err(err.into());
             }
         };
     }

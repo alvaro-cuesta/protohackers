@@ -255,6 +255,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "protohackers-2-means-to-an-end"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "futures",
+ "protohackers-utils",
+ "thiserror",
+ "tokio",
+ "tokio-util",
+]
+
+[[package]]
 name = "protohackers-9-job-centre"
 version = "0.1.0"
 dependencies = [

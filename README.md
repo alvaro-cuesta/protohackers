@@ -4,7 +4,7 @@ My Rust solutions for [Protohackers](https://protohackers.com) server programmin
 
 - [x] [0 - Smoke Test](./0-smoke-test/)
 - [x] [1 - Prime Time](./1-prime-time/)
-- [ ] [2 - Means to an End](./2-means-to-an-end/)
+- [x] [2 - Means to an End](./2-means-to-an-end/)
 - [ ] [3 - Budget Chat](./3-budget-chat/)
 - [ ] [4 - Unusual Database Program](./4-unusual-database-program/)
 - [ ] [5 - Mob in the Middle](./5-mob-in-the-middle/)

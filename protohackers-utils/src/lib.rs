@@ -1,7 +1,7 @@
-mod json_codec;
+mod codec;
 mod listen;
 
-pub use json_codec::*;
+pub use codec::*;
 pub use listen::*;
 use tokio::io::{AsyncRead, AsyncWrite};
 use tokio_util::codec::Framed;
