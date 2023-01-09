@@ -3,6 +3,7 @@ members = [
     "0-smoke-test",
     "1-prime-time",
     "2-means-to-an-end",
+    "3-budget-chat",
     "9-job-centre",
     "protohackers-utils",
 ]

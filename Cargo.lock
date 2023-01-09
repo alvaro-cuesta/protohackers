@@ -267,6 +267,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "protohackers-3-budget-chat"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "futures",
+ "protohackers-utils",
+ "tokio",
+ "tokio-util",
+]
+
+[[package]]
 name = "protohackers-9-job-centre"
 version = "0.1.0"
 dependencies = [

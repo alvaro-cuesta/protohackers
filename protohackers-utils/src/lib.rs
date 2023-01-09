@@ -12,3 +12,5 @@ where
 {
     Framed::new(rw, JsonCodec::<Req, Res>::new())
 }
+
+// TODO: Displaycodec
