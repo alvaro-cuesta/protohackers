@@ -13,7 +13,7 @@ pub enum ListenError {
     Io(#[from] std::io::Error),
 }
 
-pub async fn default_listen<F, Fut, E>(handle_client: F) -> std::io::Result<()>
+pub async fn default_tcp_listen<F, Fut, E>(handle_client: F) -> std::io::Result<()>
 where
     F: Fn(TcpStream, SocketAddr) -> Fut,
     Fut: Future<Output = Result<(), E>> + Send + 'static,

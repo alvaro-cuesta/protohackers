@@ -1,4 +1,4 @@
-use protohackers_utils::default_listen;
+use protohackers_utils::default_tcp_listen;
 use std::net::SocketAddr;
 use tokio::{
     io::{AsyncReadExt, AsyncWriteExt},
@@ -23,7 +23,7 @@ async fn handle_client(mut stream: TcpStream, _: SocketAddr) -> anyhow::Result<(
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    default_listen(handle_client).await?;
+    default_tcp_listen(handle_client).await?;
 
     Ok(())
 }

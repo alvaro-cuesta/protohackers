@@ -1,7 +1,7 @@
 mod state;
 
 use futures::{SinkExt, StreamExt};
-use protohackers_utils::default_listen;
+use protohackers_utils::default_tcp_listen;
 use state::{Event, State};
 use std::{net::SocketAddr, sync::Arc};
 use tokio::{net::TcpStream, select, sync::RwLock};
@@ -114,7 +114,7 @@ async fn main() -> anyhow::Result<()> {
     // TODO: RwLock?
     let state = Arc::new(RwLock::new(State::default()));
 
-    default_listen(|stream, addr| {
+    default_tcp_listen(|stream, addr| {
         let state = Arc::clone(&state);
         handle_client(stream, addr, state)
     })

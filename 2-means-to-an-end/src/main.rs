@@ -2,7 +2,7 @@ mod request;
 mod response;
 
 use futures::{SinkExt, StreamExt};
-use protohackers_utils::{default_listen, FixedSizeCodec, TryFromDecoder, TryIntoEncoder};
+use protohackers_utils::{default_tcp_listen, FixedSizeCodec, TryFromDecoder, TryIntoEncoder};
 use request::Request;
 use std::{collections::BTreeMap, net::SocketAddr};
 use tokio::net::TcpStream;
@@ -74,7 +74,7 @@ async fn handle_client(mut stream: TcpStream, addr: SocketAddr) -> anyhow::Resul
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    default_listen(handle_client).await?;
+    default_tcp_listen(handle_client).await?;
 
     Ok(())
 }

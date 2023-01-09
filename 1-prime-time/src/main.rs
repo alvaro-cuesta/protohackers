@@ -2,7 +2,7 @@ mod request;
 mod response;
 
 use futures::{SinkExt, StreamExt};
-use protohackers_utils::{default_listen, framed_json};
+use protohackers_utils::{default_tcp_listen, framed_json};
 use request::Request;
 use response::Response;
 use std::net::SocketAddr;
@@ -42,7 +42,7 @@ async fn handle_client(stream: TcpStream, addr: SocketAddr) -> anyhow::Result<()
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    default_listen(handle_client).await?;
+    default_tcp_listen(handle_client).await?;
 
     Ok(())
 }

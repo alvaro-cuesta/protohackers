@@ -5,7 +5,7 @@ use bytes::Bytes;
 use cipher::{Cipher, ComposedCipher};
 use codec::CipherEncoder;
 use futures::{SinkExt, StreamExt};
-use protohackers_utils::default_listen;
+use protohackers_utils::default_tcp_listen;
 use std::net::SocketAddr;
 use tokio::{
     io::{AsyncBufReadExt, BufReader},
@@ -84,7 +84,7 @@ async fn handle_client(mut stream: TcpStream, addr: SocketAddr) -> anyhow::Resul
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    default_listen(handle_client).await?;
+    default_tcp_listen(handle_client).await?;
 
     Ok(())
 }

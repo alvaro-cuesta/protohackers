@@ -12,7 +12,7 @@ use crate::{
     state::{State, WaitResponse},
 };
 use futures::{SinkExt, StreamExt};
-use protohackers_utils::{default_listen, framed_json, JsonCodecError};
+use protohackers_utils::{default_tcp_listen, framed_json, JsonCodecError};
 use std::{net::SocketAddr, sync::Arc};
 use tokio::{net::TcpStream, sync::Mutex};
 
@@ -123,7 +123,7 @@ async fn main() -> anyhow::Result<()> {
     // TODO: RwLock?
     let state = Arc::new(Mutex::new(State::default()));
 
-    default_listen(|stream, addr| {
+    default_tcp_listen(|stream, addr| {
         let state = Arc::clone(&state);
         handle_client(stream, addr, state)
     })
