@@ -1,0 +1,15 @@
+[package]
+name = "protohackers-8-insecure-sockets-layer"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.68"
+bytes = "1.3.0"
+futures = "0.3.25"
+protohackers-utils = { path = "../protohackers-utils" }
+thiserror = "1.0.38"
+tokio = { version = "1.24.1", features = ["macros", "rt-multi-thread", "io-util"] }
+tokio-util = { version = "0.7.4", features = ["codec", "io"] }

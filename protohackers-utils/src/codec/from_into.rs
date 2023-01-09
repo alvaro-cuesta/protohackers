@@ -2,6 +2,8 @@ use std::marker::PhantomData;
 use thiserror::Error;
 use tokio_util::codec::{Decoder, Encoder};
 
+// TODO: Make this a single codec?
+
 #[derive(Debug, Error)]
 pub enum TryFromDecoderError<DecErr, TryFromErr> {
     #[error("io error: {0}")]

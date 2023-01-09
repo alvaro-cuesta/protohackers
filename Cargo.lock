@@ -278,6 +278,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "protohackers-8-insecure-sockets-layer"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "bytes",
+ "futures",
+ "protohackers-utils",
+ "thiserror",
+ "tokio",
+ "tokio-util",
+]
+
+[[package]]
 name = "protohackers-9-job-centre"
 version = "0.1.0"
 dependencies = [
