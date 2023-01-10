@@ -32,6 +32,7 @@ where
 
     while let Some(stream) = incoming.next().await {
         let stream = stream?;
+
         let addr = stream.peer_addr()?;
 
         println!("Got a connection from {addr}");
