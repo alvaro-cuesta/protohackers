@@ -294,6 +294,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "protohackers-6-speed-daemon"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "bytes",
+ "futures",
+ "nom",
+ "protohackers-utils",
+ "thiserror",
+ "tokio",
+ "tokio-util",
+]
+
+[[package]]
 name = "protohackers-7-line-reversal"
 version = "0.1.0"
 dependencies = [

@@ -4,6 +4,7 @@ members = [
     "1-prime-time",
     "2-means-to-an-end",
     "3-budget-chat",
+    "6-speed-daemon",
     "7-line-reversal",
     "8-insecure-sockets-layer",
     "9-job-centre",
