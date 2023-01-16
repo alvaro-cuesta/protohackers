@@ -334,6 +334,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "protohackers-4-unusual-database-program"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "futures",
+ "protohackers-utils",
+ "tokio",
+ "tokio-util",
+]
+
+[[package]]
 name = "protohackers-5-mob-in-the-middle"
 version = "0.1.0"
 dependencies = [

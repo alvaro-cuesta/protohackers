@@ -4,6 +4,7 @@ mod lrcp;
 
 use futures::SinkExt;
 use lrcp::{LrcpSessionHandle, LrcpSocket};
+use protohackers_utils::DEFAULT_IPV4_ADDR;
 use std::sync::Arc;
 use tokio::{
     io::{AsyncRead, AsyncWrite},
@@ -42,7 +43,7 @@ async fn handle_client(
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     // TODO: Make listener?
-    let (socket, mut recv_session) = LrcpSocket::bind("0.0.0.0:1337").await?;
+    let (socket, mut recv_session) = LrcpSocket::bind(DEFAULT_IPV4_ADDR).await?;
     let socket = Arc::new(socket);
 
     // TODO  Handle errors, timeouts, etc. not only data

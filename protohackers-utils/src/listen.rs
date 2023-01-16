@@ -13,14 +13,17 @@ pub enum ListenError {
     Io(#[from] std::io::Error),
 }
 
+pub const DEFAULT_IPV4_ADDR: &str = "0.0.0.0:1337";
+pub const DEFAULT_IPV6_ADDR: &str = "[::]:1337";
+
 pub async fn default_tcp_listen<F, Fut, E>(handle_client: F) -> std::io::Result<()>
 where
     F: Fn(TcpStream, SocketAddr) -> Fut,
     Fut: Future<Output = Result<(), E>> + Send + 'static,
     E: Send + 'static,
 {
-    let listener_v4 = TcpListener::bind("0.0.0.0:1337").await?;
-    let listener_v6 = TcpListener::bind("[::]:1337").await?;
+    let listener_v4 = TcpListener::bind(DEFAULT_IPV4_ADDR).await?;
+    let listener_v6 = TcpListener::bind(DEFAULT_IPV6_ADDR).await?;
 
     let local_addr_v4 = listener_v4.local_addr()?;
     let local_addr_v6 = listener_v6.local_addr()?;
