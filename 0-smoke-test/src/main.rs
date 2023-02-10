@@ -1,29 +1,15 @@
+use futures::StreamExt;
 use protohackers_utils::default_tcp_listen;
 use std::net::SocketAddr;
-use tokio::{
-    io::{AsyncReadExt, AsyncWriteExt},
-    net::TcpStream,
-};
+use tokio::{io, net::TcpStream};
+use tokio_util::codec::{BytesCodec, Framed};
 
-async fn handle_client(mut stream: TcpStream, _: SocketAddr) -> anyhow::Result<()> {
-    let mut buf = vec![0; 1024];
-
-    loop {
-        let bytes = stream.read(&mut buf).await?;
-
-        if bytes == 0 {
-            break;
-        }
-
-        stream.write_all(&buf[0..bytes]).await?;
-    }
-
-    Ok(())
+async fn handle_client(stream: TcpStream, _: SocketAddr) -> io::Result<()> {
+    let (write, read) = Framed::new(stream, BytesCodec::new()).split();
+    read.forward(write).await
 }
 
 #[tokio::main]
-async fn main() -> anyhow::Result<()> {
-    default_tcp_listen(handle_client).await?;
-
-    Ok(())
+async fn main() -> io::Result<()> {
+    default_tcp_listen(handle_client).await
 }

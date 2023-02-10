@@ -292,9 +292,10 @@ dependencies = [
 name = "protohackers-0-smoke-test"
 version = "0.1.0"
 dependencies = [
- "anyhow",
+ "futures",
  "protohackers-utils",
  "tokio",
+ "tokio-util",
 ]
 
 [[package]]
